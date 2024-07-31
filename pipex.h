@@ -1,35 +1,32 @@
-#ifndef PIPEX_H
-#define	PIPEX_H
+#ifndef	PIPEX_H
+#define PIPEX_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <fcntl.h>
 
-#define NO_FILE "check file path"
-#define ALLOC_ERR "allocation error"
-#define PIPE_ERR "error while creating a pipe"
-#define PROC_ERR1 "error while executing first child process"
-#define PROC_ERR2 "error while executing second child process"
-#define PARAM_ERR "invalid parameters"
+#define NO_ARG "argument invalid\n"
+#define NO_FILE "no such file or directory\n"
+# define NO_FD "no fd available\n"
+#define ALLOC_ERR "allocation error\n"
+#define PIPE_ERR "error while creating a pipe\n"
+#define PROC_ERR1 "error while executing first child process\n"
+#define PARAM_ERR "invalid parameters\n"
+#define NO_CMD "no command available\n"
 
-//struct for fd and command line
-
-typedef struct s_pipe_info{
-	int infile;
-	int outfile;
-    int pipe_fd[2];
-    pid_t pid1;
-    pid_t pid2;
-}t_pipe_info;
-
-
-//manage_input
-bool init_file(t_pipe_info *param, char **av);
-
+//command executing related function
+void	exe_command(char *cmd,char **envp);
+char	*get_path(char *filename, char **envp);
+char	*find_command(char **cmd, char **envp);
 //utility
 bool    print_error(char *status);
 int	ft_strlen(const	char *a);
-void init_pipe_info(t_pipe_info *param);
-void ft_cloase(t_pipe_info *param, int mode);
-
+int openfile(char *av, bool mode);
+char	**ft_split(char const *s, char c);
+bool ft_strcmp(char *src, char *cmp);
+char	*ft_strdup(const char *src, int ex_len);
+char	*ft_strjoin(char const *s1, char const *s2);
+void free_str_arr(char **tofree);
 #endif
